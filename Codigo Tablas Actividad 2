@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BD_Coppel
+{
+    // Clase principal del formulario
+    public partial class Form1 : Form
+    {
+        // Constructor del formulario
+        public Form1()
+        {
+            // Inicializa todos los componentes visuales del formulario
+            InitializeComponent();
+        }
+
+        // Evento que se ejecuta al guardar cambios realizados en la tabla Empleado
+        private void empleadoBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            // Valida los datos capturados en el formulario
+            this.Validate();
+
+            // Finaliza la edición actual de los datos del BindingSource
+            this.empleadoBindingSource.EndEdit();
+
+            // Guarda todos los cambios realizados en el DataSet hacia la base de datos
+            this.tableAdapterManager.UpdateAll(this.cOPPELDataSet);
+        }
+
+        // Evento que se ejecuta automáticamente cuando el formulario se abre
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            // Carga los datos de la tabla Directivos en el DataSet
+            this.directivosTableAdapter.Fill(this.cOPPELDataSet.Directivos);
+
+            // Carga los datos de la tabla centroTrabajo en el DataSet
+            this.centroTrabajoTableAdapter.Fill(this.cOPPELDataSet.centroTrabajo);
+
+            // Carga los datos de la tabla puestos en el DataSet
+            this.puestosTableAdapter.Fill(this.cOPPELDataSet.puestos);
+
+            // Carga los datos de la tabla Empleado en el DataSet
+            this.empleadoTableAdapter.Fill(this.cOPPELDataSet.Empleado);
+        }
+    }
+}
